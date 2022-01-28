@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-namespace WebServiceASP.NET_MVC.Models
+namespace WebServiceAPI.Models
 {
     public class Product
     {
