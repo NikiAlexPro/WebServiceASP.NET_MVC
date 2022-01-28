@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using WebServiceASP.NET_MVC.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Get string from config file (.json)
+string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<ApplicationContext>(option => option.UseSqlServer(connection));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -23,5 +31,13 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.Map("/", (ApplicationContext db) => db.Product.ToList());
+/// <summary>
+/// Добавление MapEndPoin
+/// 
+/// </summary>
+
+
 
 app.Run();
