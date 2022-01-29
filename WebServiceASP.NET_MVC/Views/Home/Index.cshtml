@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<WebServiceASP.NET_MVC.Models.Product>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -8,21 +9,24 @@
     <p1>@DateTime.Now</p1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <h1>
-        <button type="submit" class="btn btn-success">Загрузить</button>
+        <button type="submit" value="Submit" class="btn btn-success" href="~/Home/Test">Загрузить</button>
+        <a href="~/Home/Test">Купить</a>
     </h1>
     
     <table class="table table-hover">
-        <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
             </tr>
-        </thead>
-            
-        <tbody>
-
-        </tbody>
+            @foreach(var product in Model)
+            {
+                <tr>
+                    <td>@product.ID</td>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                </tr>
+            }
     </table>
     
 </div>

@@ -43,15 +43,20 @@ namespace WebServiceASP.NET_MVC.Controllers
             {
                 using (StreamReader Reader = new StreamReader(stream))
                 {
-                    var deserialize_product = JsonConvert.DeserializeObject<List<Product>>(Reader.ReadToEnd());
-                    Products = deserialize_product;
+                    Products = JsonConvert.DeserializeObject<List<Product>>(Reader.ReadToEnd());
                 }
             }
-            return View();
+            return View(Products);
 
 
             
         }
+
+        public IActionResult Test()
+        {
+            return View("Privacy");
+        }
+
 
         public IActionResult Privacy()
         {
