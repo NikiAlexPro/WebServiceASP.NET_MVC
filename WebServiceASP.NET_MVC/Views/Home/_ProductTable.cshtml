@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebServiceASP.NET_MVC.Models.Product> 
+
+
+<table class="table table-hover">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Operations</th>
+            </tr>
+            @foreach(var product in Model)
+            {
+                <tr id="product-@product.ID">
+                    <td>@product.ID</td>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@Html.ActionLink("Редактировать", "Edit", 
+                        new { id = product.ID }, new { @class = "compItem" })
+                        @Html.ActionLink("Удалить", "Delete", 
+                        new { id = product.ID}, new { @class = "compItem" })    
+                    </td>
+                </tr>
+            }
+    </table>
+

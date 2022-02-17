@@ -52,7 +52,7 @@ namespace WebServiceAPI.Controllers
             if (product == null)
                 return BadRequest();
             context.Product.Add(product);
-            context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return Ok(product);
         }
 
@@ -64,7 +64,7 @@ namespace WebServiceAPI.Controllers
             if (!context.Product.Any(x => x.ID == product.ID))
                 return NotFound();
             context.Product.Update(product);
-            context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return Ok(product);
         }
 
@@ -75,7 +75,7 @@ namespace WebServiceAPI.Controllers
             if (product == null)
                 return NotFound();
             context.Product.Remove(product);
-            context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return Ok(product);
         }
     }

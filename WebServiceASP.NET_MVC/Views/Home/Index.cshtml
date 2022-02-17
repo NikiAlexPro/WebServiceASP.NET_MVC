@@ -4,29 +4,123 @@
 }
 
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p1>@DateTime.Now</p1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <h1>
-        <button type="submit" value="Submit" class="btn btn-success" href="~/Home/Test">Загрузить</button>
-        <a href="~/Home/Test">Купить</a>
-    </h1>
+<div class="content-center">
+    <h2>Перечень изделий</h2>
+    </div>
     
-    <table class="table table-hover">
+    
+   @* @Html.ActionLink("Добавить изделие", "Create", new { @class = "compItem" })*@
+      
+    
+    <form method="get">
+    <div class="container">
+        <button id="btnCreate" class="btn btn-success">Создать</button> 
+      <div class="row">
+          <label class="control-label">Наименование изделия: </label>
+        <div class="col">
+            <div class="form-inline form-group">
+                <input name="name" class="form-control" />
+            </div>
+        </div>
+        <div class="col">
+          <input type="submit" value="Фильтр" class="btn btn-primary"/> 
+        </div>
+                                
+      </div>
+    </div>
+     </form>
+    
+   @*Загрузка содержимого PartialView*@
+    <div id="products">
+        @{
+            await Html.RenderPartialAsync("_ProductTable", Model);
+        }
+    </div>
+
+    <div id="modDialog" class="modal fade" >
+            <div id="dialogContent" class="modal-dialog"></div>
+        </div>
+    
+
+
+  @*<table class="table table-hover">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Operations</th>
             </tr>
             @foreach(var product in Model)
             {
-                <tr>
+                <tr id="product-@product.ID">
                     <td>@product.ID</td>
                     <td>@product.Name</td>
                     <td>@product.Description</td>
+                    <td><a class="btn btn-warning" data-product-id=@product.ID>Редактировать</a></td>
+                    <td><a class="btn btn-danger">Удалить</a></td>
+                    <td>@Html.ActionLink(product.Name, "Create", 
+                new { id = product.ID }, new { @class = "compItem" })</td>
                 </tr>
             }
-    </table>
-    
-</div>
+    </table>*@
+
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+ 
+        @*
+        $('#btnCreate').on('click', function (e) {
+            alert("text");
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("ProductTable")",
+                success: function (partialView) {
+                                   alert(partialView);
+                    $('#products').html(partialView);
+                   }
+               });
+        });
+        *@
+        $('#btnCreate').on('click', function (e) {
+            alert("text");
+             e.preventDefault();
+                $.get("@Url.Action("Create")", function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                    console.log(this.href);
+                });
+        });
+
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+           $(".compItem").click(function (e) {
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                    console.log(this.href);
+                });
+           });
+        })
+
+
+
+    </script>
+}
+
+
+@*$('#btnCreate').on('click', function (e) {
+            alert("text");
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("ProductTable")",
+                success: function (msg) {
+                    //console.log(url);
+                    // alert(msg);
+                                        }
+                    }).done(function(result){ $('#products').html(result);});
+        });*@
